@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class PlayerMover : MonoBehaviour
 
     private float _directionX;
 
+    public Action<float> IsMoved;
     public float DirectionX => _directionX;
 
     public void Update()
@@ -16,6 +18,8 @@ public class PlayerMover : MonoBehaviour
         _directionX = Input.GetAxis("Horizontal");
 
         transform.position = new Vector3(transform.position.x + _directionX * _speed * Time.deltaTime, transform.position.y, 0);
+
+        IsMoved.Invoke(_directionX);
 
         ChangeFlipX();
     }

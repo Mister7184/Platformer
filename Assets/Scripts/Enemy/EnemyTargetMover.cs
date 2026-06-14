@@ -22,5 +22,16 @@ public class EnemyTargetMover : MonoBehaviour
 
         if (offset.sqrMagnitude < _closeDistance * _closeDistance)
             _pointIndex = (_pointIndex + 1) % _wayPoints.Count;
+
+        Vector2 direction = point.position - transform.position;
+
+        if (direction.x > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (direction.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
     }
 }
