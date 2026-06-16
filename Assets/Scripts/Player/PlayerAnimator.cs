@@ -13,7 +13,7 @@ public class PlayerAnimator : MonoBehaviour
         _rigidbody = rigidbody;
     }
 
-    private void Update()
+    public void UpdateLogic()
     {
         _animator.SetFloat("Speed", Mathf.Abs(_rigidbody.velocity.x));
     }

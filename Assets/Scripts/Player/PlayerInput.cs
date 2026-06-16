@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    private const string HorizontalAxis = "Horizontal";
+    private const KeyCode JumpKey = KeyCode.UpArrow;
+
     private float _directionX;
     private bool _isJumpPressed;
 
     public float DirectionX => _directionX;
     public bool IsJumpPressed => _isJumpPressed;
 
-    private void Update()
+    public void UpdateLogic()
     {
-        _directionX = Input.GetAxisRaw("Horizontal");
-        _isJumpPressed = Input.GetKeyDown(KeyCode.Space);
+        _directionX = Input.GetAxisRaw(HorizontalAxis);
+        _isJumpPressed = Input.GetKeyDown(JumpKey);
     }
 }

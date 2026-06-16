@@ -14,7 +14,7 @@ public class PlayerJumper : MonoBehaviour
         _playerInput = playerInput;
     }
 
-    private void Update()
+    public void UpdateLogic()
     {
         if (_playerInput.IsJumpPressed && _groundChecker.IsGrounded())
             Jump();

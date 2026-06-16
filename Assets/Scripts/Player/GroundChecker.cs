@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GroundChecker : MonoBehaviour
 {
-    [SerializeField] Transform _checkPoint;
+    [SerializeField] private Transform _checkPoint;
     [SerializeField] private float _radius = 0.2f;
     [SerializeField] private LayerMask _groundLayer;
 

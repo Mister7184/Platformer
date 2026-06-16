@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GamePlayManager : MonoBehaviour
+public class GamePlayController : MonoBehaviour
 {
-    [SerializeField] List<Enemy> _enemies;
-    [SerializeField] CoinSpawner _coinSpawner;
+    [SerializeField] private List<Enemy> _enemies;
+    [SerializeField] private CoinSpawner _coinSpawner;
 
     public void PlayGame() 
     {
@@ -15,6 +15,9 @@ public class GamePlayManager : MonoBehaviour
     private void ActivateEnemies() 
     {
         foreach (Enemy enemy in _enemies)
+        {
+            enemy.Initialize();
             enemy.Activate();
+        }
     }
 }

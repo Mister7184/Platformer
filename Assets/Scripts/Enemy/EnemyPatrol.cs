@@ -11,6 +11,12 @@ public class EnemyPatrol : MonoBehaviour
     private float _closeDistance = 0.1f;
     private bool _isWork = true;
     private Coroutine _patrolRoutine;
+    private Flipper _flipper;
+
+    public void Initialize(Flipper flipper) 
+    {
+        _flipper = flipper;
+    }
 
     public void StartPatrol()
     {
@@ -36,14 +42,7 @@ public class EnemyPatrol : MonoBehaviour
 
                 Vector2 direction = point.position - transform.position;
 
-                if (direction.x > 0)
-                {
-                    transform.localScale = new Vector3(1, 1, 1);
-                }
-                else if (direction.x < 0)
-                {
-                    transform.localScale = new Vector3(-1, 1, 1);
-                }
+                _flipper.Flip(direction.x);
             }
 
             yield return null;

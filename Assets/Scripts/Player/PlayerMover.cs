@@ -9,14 +9,16 @@ public class PlayerMover : MonoBehaviour
     private float _directionX;
     private Rigidbody2D _rigidbody;
     private PlayerInput _playerInput;
+    private Flipper _flipper;
 
-    public void Initialize(Rigidbody2D rigidbody, PlayerInput playerInput)
+    public void Initialize(Rigidbody2D rigidbody, PlayerInput playerInput, Flipper flipper)
     {
         _rigidbody = rigidbody;
         _playerInput = playerInput;
+        _flipper = flipper;
     }
 
-    public void FixedUpdate()
+    public void FixedUpdateLogic()
     {
         _directionX = _playerInput.DirectionX;
 
@@ -32,7 +34,7 @@ public class PlayerMover : MonoBehaviour
 
         _rigidbody.velocity = new Vector2(currentVelocityX, _rigidbody.velocity.y);
 
-        ChangeFlipX();
+        _flipper.Flip(_directionX);
     }
 
     private float NormalizedVelocityX(float movement) 
@@ -43,13 +45,5 @@ public class PlayerMover : MonoBehaviour
             normalVelocityX = 0;
 
         return normalVelocityX;
-    }
-
-    private void ChangeFlipX()
-    {
-        if (_directionX > 0)
-            transform.eulerAngles = Vector3.zero;
-        else if (_directionX < 0)
-            transform.eulerAngles = new Vector3(0, 180, 0);
     }
 }

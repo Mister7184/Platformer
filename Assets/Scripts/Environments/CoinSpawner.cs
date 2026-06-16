@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class CoinSpawner : MonoBehaviour
 {
-    [SerializeField] List<Transform> _spawnPoints;
-    [SerializeField] Coin _prefab;
+    [SerializeField] private List<Transform> _spawnPoints;
+    [SerializeField] private Coin _prefab;
 
     public void Spawn()
     {
