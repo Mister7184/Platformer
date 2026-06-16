@@ -1,18 +1,20 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GamePlayManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] List<Enemy> _enemies;
+    [SerializeField] CoinSpawner _coinSpawner;
+
+    public void PlayGame() 
     {
-        
+        ActivateEnemies();
+        _coinSpawner.Spawn();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void ActivateEnemies() 
     {
-        
+        foreach (Enemy enemy in _enemies)
+            enemy.Activate();
     }
 }
