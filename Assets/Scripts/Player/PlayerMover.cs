@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
@@ -11,6 +12,8 @@ public class PlayerMover : MonoBehaviour
     private PlayerInput _playerInput;
     private Flipper _flipper;
 
+    public event Action<float> SpeedChanged;
+
     public void Initialize(Rigidbody2D rigidbody, PlayerInput playerInput, Flipper flipper)
     {
         _rigidbody = rigidbody;
@@ -23,16 +26,16 @@ public class PlayerMover : MonoBehaviour
         _directionX = _playerInput.DirectionX;
 
         float targetSpeed = _directionX * _maxSpeed;
-
         float speedDifferent = targetSpeed - _rigidbody.velocity.x;
 
         float accelerationRate = Mathf.Abs(targetSpeed) > 0.1f ? _acceleration : _deceleation;
 
         float movement = speedDifferent * accelerationRate * Time.fixedDeltaTime;
-
         float currentVelocityX = NormalizedVelocityX(movement);
 
         _rigidbody.velocity = new Vector2(currentVelocityX, _rigidbody.velocity.y);
+
+        SpeedChanged?.Invoke(Mathf.Abs(currentVelocityX));
 
         _flipper.Flip(_directionX);
     }

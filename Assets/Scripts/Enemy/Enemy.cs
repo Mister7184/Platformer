@@ -7,15 +7,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyPatrol _patrol;
     private Flipper _flipper;
 
-    public void Initialize() 
+    public void Activate() 
     {
         _flipper = GetComponent<Flipper>();
 
         _patrol.Initialize(_flipper);
-    }
 
-    public void Activate() 
-    {
         _patrol.StartPatrol();
     }
 }

@@ -4,17 +4,28 @@ using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
-    private Animator _animator;
-    private Rigidbody2D _rigidbody;
+    private const string SpeedFloatName = "Speed";
 
-    public void Initialize(Rigidbody2D rigidbody)
+    public readonly int Speed = Animator.StringToHash(SpeedFloatName);
+
+    private Animator _animator;
+    private PlayerMover _mover;
+
+    public void Initialize(PlayerMover mover)
     {
         _animator = GetComponent<Animator>();
-        _rigidbody = rigidbody;
+        _mover = mover;
+
+        _mover.SpeedChanged += OnSpeedChanged;
     }
 
-    public void UpdateLogic()
+    public void OnSpeedChanged(float moveSpeed)
     {
-        _animator.SetFloat("Speed", Mathf.Abs(_rigidbody.velocity.x));
+        _animator.SetFloat(Speed, moveSpeed);
+    }
+
+    private void OnDisable()
+    {
+        _mover.SpeedChanged -= OnSpeedChanged;
     }
 }

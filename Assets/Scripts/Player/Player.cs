@@ -23,14 +23,13 @@ public class Player : MonoBehaviour
 
         _mover.Initialize(_rigidbody, _playerInput, _flipper);
         _playerJumper.Initialze(_rigidbody, _playerInput);
-        _animator.Initialize(_rigidbody);
+        _animator.Initialize(_mover);
     }
 
     public void UseUpdateLogic() 
     {
         _playerInput.UpdateLogic();
         _playerJumper.UpdateLogic();
-        _animator.UpdateLogic();
     }
 
     public void UseFixedUpdateLogic() 

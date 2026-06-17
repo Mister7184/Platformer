@@ -16,7 +16,6 @@ public class GamePlayController : MonoBehaviour
     {
         foreach (Enemy enemy in _enemies)
         {
-            enemy.Initialize();
             enemy.Activate();
         }
     }
