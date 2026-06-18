@@ -13,20 +13,20 @@ public class EnemyPatrol : MonoBehaviour
     private float _closeDistance = 0.1f;
     private Flipper _flipper;
     private float _speed;
-
-    public void ChangeSpeed(bool hasPlayer) 
-    {
-        if (hasPlayer)
-            _speed = _accelerationSpeed;
-        else 
-            _speed = _baseSpeed;
-    }
+    private bool _hasPlayer;
 
     public void Initialize(Flipper flipper)
     {
         _flipper = flipper;
 
         _speed = _baseSpeed;
+    }
+
+    public void SetPLayerVisible(bool hasPlayer) 
+    {
+        _hasPlayer = hasPlayer;
+
+        _speed = hasPlayer ? _accelerationSpeed : _baseSpeed;
     }
 
     public void UpdateLogic()
@@ -46,7 +46,10 @@ public class EnemyPatrol : MonoBehaviour
         Vector2 offset = point.position - transform.position;
 
         if (offset.sqrMagnitude < _closeDistance * _closeDistance)
-            _pointIndex = (_pointIndex + 1) % _wayPoints.Count;
+        {
+            if (_hasPlayer == false)
+                _pointIndex = (_pointIndex + 1) % _wayPoints.Count;
+        }
 
         Vector2 direction = point.position - transform.position;
 
