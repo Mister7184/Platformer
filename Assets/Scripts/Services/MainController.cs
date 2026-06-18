@@ -7,13 +7,14 @@ public class MainController : MonoBehaviour
 
     private void Awake()
     {
-        _gamePlayManager.PlayGame();
+        _gamePlayManager.Initialize();
         _player.Initialize();
     }
 
     private void Update()
     {
         _player.UseUpdateLogic();
+        _gamePlayManager.UseUpdateLogic();
     }
 
     private void FixedUpdate()
