@@ -6,20 +6,17 @@ public class GamePlayController : MonoBehaviour
     [SerializeField] private List<Enemy> _enemies;
     [SerializeField] private CoinSpawner _coinSpawner;
 
-    public void Initialize() 
+    public void PlayGame() 
     {
-        foreach (Enemy enemy in _enemies)
-        {
-            enemy.Initialize();
-        }
+        ActivateEnemies();
         _coinSpawner.Spawn();
     }
 
-    public void UseUpdateLogic() 
+    private void ActivateEnemies() 
     {
         foreach (Enemy enemy in _enemies)
         {
-            enemy.UseUpdateLogic();
+            enemy.Activate();
         }
     }
 }

@@ -5,12 +5,15 @@ public class PlayerInput : MonoBehaviour
     private const string HorizontalAxis = "Horizontal";
     private const KeyCode JumpKey = KeyCode.UpArrow;
 
-    public float DirectionX { get; private set; }
-    public bool IsJumpPressed { get; private set; }
+    private float _directionX;
+    private bool _isJumpPressed;
+
+    public float DirectionX => _directionX;
+    public bool IsJumpPressed => _isJumpPressed;
 
     public void UpdateLogic()
     {
-        DirectionX = Input.GetAxisRaw(HorizontalAxis);
-        IsJumpPressed = Input.GetKeyDown(JumpKey);
+        _directionX = Input.GetAxisRaw(HorizontalAxis);
+        _isJumpPressed = Input.GetKeyDown(JumpKey);
     }
 }

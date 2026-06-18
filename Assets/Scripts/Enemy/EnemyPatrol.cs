@@ -5,51 +5,47 @@ using UnityEngine;
 public class EnemyPatrol : MonoBehaviour
 {
     [SerializeField] private List<Transform> _wayPoints;
-    [SerializeField] private float _baseSpeed = 1f;
-    [SerializeField] private float _accelerationSpeed = 3f;
-    
+    [SerializeField] private float _speed = 1f;
 
     private int _pointIndex;
     private float _closeDistance = 0.1f;
+    private bool _isWork = true;
+    private Coroutine _patrolRoutine;
     private Flipper _flipper;
-    private float _speed;
 
-    public void ChangeSpeed(bool hasPlayer) 
-    {
-        if (hasPlayer)
-            _speed = _accelerationSpeed;
-        else 
-            _speed = _baseSpeed;
-    }
-
-    public void Initialize(Flipper flipper)
+    public void Initialize(Flipper flipper) 
     {
         _flipper = flipper;
-
-        _speed = _baseSpeed;
     }
 
-    public void UpdateLogic()
+    public void StartPatrol()
     {
-        Patrol();
+        if (_patrolRoutine == null)
+            _patrolRoutine = StartCoroutine(Patrol());
     }
 
-    private void Patrol()
+    private IEnumerator Patrol()
     {
-        if (_wayPoints.Count == 0)
-            return;
+        while (_isWork)
+        {
+            if (_wayPoints.Count > 0)
+            {
 
-        Transform point = _wayPoints[_pointIndex];
+                Transform point = _wayPoints[_pointIndex];
 
-        transform.position = Vector2.MoveTowards(transform.position, point.position, _speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, point.position, _speed * Time.deltaTime);
 
-        Vector2 offset = point.position - transform.position;
+                Vector2 offset = point.position - transform.position;
 
-        if (offset.sqrMagnitude < _closeDistance * _closeDistance)
-            _pointIndex = (_pointIndex + 1) % _wayPoints.Count;
+                if (offset.sqrMagnitude < _closeDistance * _closeDistance)
+                    _pointIndex = (_pointIndex + 1) % _wayPoints.Count;
 
-        Vector2 direction = point.position - transform.position;
+                Vector2 direction = point.position - transform.position;
 
-        _flipper.Flip(direction.x);
+                _flipper.Flip(direction.x);
+            }
+
+            yield return null;
+        }
     }
 }
