@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class EnemyVision : MonoBehaviour
 {
+    [Header("Layer")]
+    [SerializeField] private LayerMask _playerLayer;
+
+    [Header("Vision")]
     [SerializeField] private Vector3 _size;
     [SerializeField] private Vector3 _offset;
-    [SerializeField] private LayerMask _playerLayer;
+
+    [Header("Hearing")]
+    [SerializeField] private float _hearingRadius;
 
     private Flipper _flipper;
 
@@ -14,10 +20,14 @@ public class EnemyVision : MonoBehaviour
     {
         _flipper = flipper;
     }
-    public bool HasPlayer()
+    public bool CanSeePlayer()
     {
-        Debug.Log(_flipper.Direction);
         return Physics2D.OverlapBox(transform.position + CurrentOffset, _size, 0, _playerLayer);
+    }
+
+    public bool CanHearPlayer() 
+    {
+        return Physics2D.OverlapCircle(transform.position, _hearingRadius, _playerLayer);
     }
 
     private Vector3 CurrentOffset => new Vector3(_offset.x * _flipper.Direction, _offset.y, 0);

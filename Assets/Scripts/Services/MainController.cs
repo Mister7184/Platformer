@@ -7,7 +7,7 @@ public class MainController : MonoBehaviour
 
     private void Awake()
     {
-        _gamePlayManager.Initialize();
+        _gamePlayManager.Initialize(_player.transform);
         _player.Initialize();
     }
 
