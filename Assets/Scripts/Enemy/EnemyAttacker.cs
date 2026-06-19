@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class EnemyAttacker : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float _radius;
+    [SerializeField] private float _damage;
+    [SerializeField] private LayerMask _playerLayer;
+
+    public bool CanAttack() 
     {
-        
+        return Physics2D.OverlapCircle(transform.position, _radius, _playerLayer);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Attack() 
     {
-        
+
     }
 }
