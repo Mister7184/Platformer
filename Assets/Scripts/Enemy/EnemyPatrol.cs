@@ -12,6 +12,7 @@ public class EnemyPatrol : MonoBehaviour
     private float _closeDistance = 0.1f;
     private Flipper _flipper;
     private float _speed;
+    private bool _hasPlayer;
 
     public void Initialize(Flipper flipper)
     {

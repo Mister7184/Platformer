@@ -40,16 +40,9 @@ public class Enemy : MonoBehaviour
         _stateMachine = new EnemyStateMachine();
 
         _patrolState = new PatrolState(_context, _stateMachine);
-        _chaseState = new ChaseState(_context, _stateMachine);
-        _attackState = new AttackState(_context, _stateMachine);
+        _chaseState = new ChaseState();
+        _attackState = new AttackState();
 
-        _patrolState.Initialize(_chaseState);
-        _chaseState.Initialize(_patrolState, _attackState);
-        _attackState.Initialize(_chaseState);
-    }
-
-    public void UseUpdateLogic() 
-    {
-        _stateMachine.Update();
+        
     }
 }
