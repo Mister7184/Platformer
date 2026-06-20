@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Flipper), typeof(EnemyPatrol), typeof(EnemyVision))]
-[RequireComponent(typeof(EnemyChaser))]
+[RequireComponent(typeof(EnemyChaser), typeof(EnemyAttacker))]
 
 public class Enemy : MonoBehaviour
 {
@@ -19,13 +19,17 @@ public class Enemy : MonoBehaviour
 
     private EnemyContext _context;
 
-    public void Initialize(Transform player) 
+    public void Initialize(Transform player)
     {
         _flipper = GetComponent<Flipper>();
         _patrol = GetComponent<EnemyPatrol>();
         _vision = GetComponent<EnemyVision>();
         _attacker = GetComponent<EnemyAttacker>();
         _chaser = GetComponent<EnemyChaser>();
+
+        _patrol.Initialize(_flipper);
+        _vision.Initialize(_flipper);
+        _chaser.Initialize(player, _flipper);
 
         _context = new EnemyContext()
         {
@@ -40,9 +44,18 @@ public class Enemy : MonoBehaviour
         _stateMachine = new EnemyStateMachine();
 
         _patrolState = new PatrolState(_context, _stateMachine);
-        _chaseState = new ChaseState();
-        _attackState = new AttackState();
+        _chaseState = new ChaseState(_context, _stateMachine);
+        _attackState = new AttackState(_context, _stateMachine);
 
-        
+        _patrolState.Initialize(_chaseState);
+        _chaseState.Initialize(_patrolState, _attackState);
+        _attackState.Initialize(_chaseState);
+
+        _stateMachine.ChangeState(_patrolState);
+    }
+
+    public void UseUpdateLogic()
+    {
+        _stateMachine.Update();
     }
 }

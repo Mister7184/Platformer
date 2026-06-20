@@ -12,7 +12,7 @@ public class EnemyPatrol : MonoBehaviour
     private float _closeDistance = 0.1f;
     private Flipper _flipper;
     private float _speed;
-    private bool _hasPlayer;
+    private int _direction;
 
     public void Initialize(Flipper flipper)
     {
@@ -26,6 +26,14 @@ public class EnemyPatrol : MonoBehaviour
         Patrol();
     }
 
+    public void SetDirection(float direction)
+    {
+        if (direction > 0)
+            _pointIndex = _wayPoints.Count - 1;
+        else
+            _pointIndex = 0;
+    }
+
     private void Patrol()
     {
         if (_wayPoints.Count == 0)
@@ -35,13 +43,24 @@ public class EnemyPatrol : MonoBehaviour
 
         transform.position = Vector2.MoveTowards(transform.position, point.position, _speed * Time.deltaTime);
 
-        Vector2 offset = point.position - transform.position;
+        if (ReachedPoint(point))
+        {
+            if (_pointIndex == 0)
+                _direction = 1;
+            else if (_pointIndex == _wayPoints.Count - 1)
+                _direction = -1;
 
-        if (offset.sqrMagnitude < _closeDistance * _closeDistance)
-            _pointIndex = (_pointIndex + 1) % _wayPoints.Count;
-
+            _pointIndex += _direction;
+        }
         Vector2 direction = point.position - transform.position;
 
         _flipper.Flip(direction.x);
+    }
+
+    private bool ReachedPoint(Transform point) 
+    {
+        Vector2 offset = point.position - transform.position;
+
+        return offset.sqrMagnitude < _closeDistance * _closeDistance;
     }
 }

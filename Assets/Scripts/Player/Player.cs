@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody2D), typeof(PlayerMover),  typeof(PlayerJumper))]
-[RequireComponent(typeof(Flipper))]
+[RequireComponent(typeof(Flipper), typeof(Health))]
 
 public class Player : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private PlayerJumper _playerJumper;
     private PlayerInput _playerInput;
     private Flipper _flipper;
+    private Health _health;
 
     public void Initialize()
     {
@@ -19,11 +20,13 @@ public class Player : MonoBehaviour
         _flipper = GetComponent<Flipper>();
         _mover = GetComponent<PlayerMover>();
         _playerJumper = GetComponent<PlayerJumper>();
+        _health = GetComponent<Health>();
         _animator = GetComponentInChildren<PlayerAnimator>();
 
         _mover.Initialize(_rigidbody, _playerInput, _flipper);
         _playerJumper.Initialze(_rigidbody, _playerInput);
-        _animator.Initialize(_mover);
+        _health.Initialize();
+        _animator.Initialize(_mover, _health, _playerInput);
     }
 
     public void UseUpdateLogic() 

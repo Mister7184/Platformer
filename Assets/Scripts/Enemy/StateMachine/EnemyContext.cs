@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyContext : MonoBehaviour
+public class EnemyContext
 {
     public Transform Player;
     public EnemyVision Vision;

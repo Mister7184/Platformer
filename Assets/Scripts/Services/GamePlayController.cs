@@ -12,6 +12,7 @@ public class GamePlayController : MonoBehaviour
         {
             enemy.Initialize(player);
         }
+
         _coinSpawner.Spawn();
     }
 

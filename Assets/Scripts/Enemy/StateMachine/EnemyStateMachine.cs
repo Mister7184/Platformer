@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateMachine : MonoBehaviour
+public class EnemyStateMachine
 {
     private IEnemyState _current;
 
     public void ChangeState(IEnemyState next) 
     {
-        if (_current != next)
+        if (_current == next)
             return;
 
         _current?.Exit();
