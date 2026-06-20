@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Flipper), typeof(EnemyPatrol), typeof(EnemyVision))]
-[RequireComponent(typeof(EnemyChaser), typeof(EnemyAttacker))]
+[RequireComponent(typeof(EnemyChaser), typeof(EnemyAttacker), typeof(CharacterAnimator))]
 
 public class Enemy : MonoBehaviour
 {
@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     private EnemyAttacker _attacker;
     private EnemyChaser _chaser;
     private Flipper _flipper;
+    private CharacterAnimator _animator;
 
     private EnemyStateMachine _stateMachine;
 
@@ -26,10 +27,12 @@ public class Enemy : MonoBehaviour
         _vision = GetComponent<EnemyVision>();
         _attacker = GetComponent<EnemyAttacker>();
         _chaser = GetComponent<EnemyChaser>();
+        _animator = GetComponent<CharacterAnimator>();
 
         _patrol.Initialize(_flipper);
         _vision.Initialize(_flipper);
         _chaser.Initialize(player, _flipper);
+        _animator.Initialize();
 
         _context = new EnemyContext()
         {

@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D _rigidbody;
     private PlayerMover _mover;
-    private PlayerAnimator _animator;
+    private CharacterAnimator _animator;
     private PlayerJumper _playerJumper;
     private PlayerInput _playerInput;
     private Flipper _flipper;
@@ -21,12 +21,12 @@ public class Player : MonoBehaviour
         _mover = GetComponent<PlayerMover>();
         _playerJumper = GetComponent<PlayerJumper>();
         _health = GetComponent<Health>();
-        _animator = GetComponentInChildren<PlayerAnimator>();
+        _animator = GetComponentInChildren<CharacterAnimator>();
 
         _mover.Initialize(_rigidbody, _playerInput, _flipper);
         _playerJumper.Initialze(_rigidbody, _playerInput);
         _health.Initialize();
-        _animator.Initialize(_mover, _health, _playerInput);
+        _animator.Initialize();
     }
 
     public void UseUpdateLogic() 

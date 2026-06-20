@@ -10,4 +10,5 @@ public class EnemyContext
     public Flipper Flipper;
     public EnemyAttacker Attacker;
     public EnemyChaser Chaser;
+    public CharacterAnimator Animator;
 }
