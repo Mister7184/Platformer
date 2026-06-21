@@ -10,6 +10,8 @@ public class Health : MonoBehaviour, IDamageable
     public Action Damaged;
     public Action Died;
 
+    public bool IsDead => _currentHealth <= 0;
+
     public void Initialize()
     {
         _currentHealth = _maxHealth;
@@ -18,9 +20,20 @@ public class Health : MonoBehaviour, IDamageable
     public void TakeDamage(int damage) 
     {
         _currentHealth -= damage;
-        Damaged?.Invoke();
 
-        if(_currentHealth <= 0)
+        if (_currentHealth <= 0)
+        {
+            _currentHealth = 0;
             Died?.Invoke();
+        }
+        else 
+        {
+            Damaged?.Invoke();
+        }
+    }
+
+    public void AddHealth(int value) 
+    {
+        _currentHealth = Mathf.Min(_currentHealth + value, _maxHealth);
     }
 }

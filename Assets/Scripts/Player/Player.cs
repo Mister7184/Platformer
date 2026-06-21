@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody2D), typeof(PlayerMover),  typeof(PlayerJumper))]
 [RequireComponent(typeof(Flipper), typeof(Health), typeof(PlayerAttacker))]
+[RequireComponent(typeof(PlayerCollector), typeof(PlayerWallet))]
 
 public class Player : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class Player : MonoBehaviour
     private Flipper _flipper;
     private Health _health;
     private PlayerAttacker _attacker;
+    private PlayerCollector _collector;
+    private PlayerWallet _wallet;
 
     private void OnDisable()
     {
@@ -30,6 +33,8 @@ public class Player : MonoBehaviour
         _jumper = GetComponent<PlayerJumper>();
         _health = GetComponent<Health>();
         _attacker = GetComponent<PlayerAttacker>();
+        _collector = GetComponent<PlayerCollector>();
+        _wallet = GetComponent<PlayerWallet>();
         _animator = GetComponentInChildren<CharacterAnimator>();
 
         _mover.Initialize(_rigidbody, _input, _flipper, _animator);
@@ -37,6 +42,7 @@ public class Player : MonoBehaviour
         _health.Initialize();
         _animator.Initialize();
         _attacker.Initialize(_animator);
+        _collector.Initialize(_wallet, _health);
         
         _input.AttackPressed += _attacker.Attack;
         _health.Damaged += _animator.PlayTakeDamage;

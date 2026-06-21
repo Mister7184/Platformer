@@ -1,9 +1,13 @@
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class Coin : PickupItem
 {
-    public void Collect() 
+    public override void Collect(PlayerCollector collector) 
     {
-        Destroy(gameObject);
+        Debug.Log(collector);
+        Debug.Log(collector.Wallet);
+
+        collector.Wallet.AddCoin();
+        DestroySelf();
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 public class GamePlayController : MonoBehaviour
 {
     [SerializeField] private List<Enemy> _enemies;
-    [SerializeField] private CoinSpawner _coinSpawner;
+    [SerializeField] private List<ItemSpawner> _spawners;
 
     public void Initialize(Transform player) 
     {
@@ -13,7 +13,10 @@ public class GamePlayController : MonoBehaviour
             enemy.Initialize(player);
         }
 
-        _coinSpawner.Spawn();
+        foreach (var spawner in _spawners)
+        {
+            spawner.Spawn();
+        }
     }
 
     public void UseUpdateLogic() 
