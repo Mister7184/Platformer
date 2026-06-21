@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Flipper), typeof(EnemyPatrol), typeof(EnemyVision))]
-[RequireComponent(typeof(EnemyChaser), typeof(EnemyAttacker), typeof(CharacterAnimator))]
+[RequireComponent(typeof(EnemyChaser), typeof(EnemyAttacker), typeof(Health))]
 
 public class Enemy : MonoBehaviour
 {
@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     private EnemyChaser _chaser;
     private Flipper _flipper;
     private CharacterAnimator _animator;
+    private Health _health;
+
 
     private EnemyStateMachine _stateMachine;
 
@@ -20,6 +22,12 @@ public class Enemy : MonoBehaviour
 
     private EnemyContext _context;
 
+    private void OnDisable()
+    {
+        _health.Damaged -= _animator.PlayTakeDamage;
+        _health.Died -= _animator.PlayDie;
+    }
+
     public void Initialize(Transform player)
     {
         _flipper = GetComponent<Flipper>();
@@ -27,12 +35,18 @@ public class Enemy : MonoBehaviour
         _vision = GetComponent<EnemyVision>();
         _attacker = GetComponent<EnemyAttacker>();
         _chaser = GetComponent<EnemyChaser>();
-        _animator = GetComponent<CharacterAnimator>();
+        _health = GetComponent<Health>();
+        _animator = GetComponentInChildren<CharacterAnimator>();
 
-        _patrol.Initialize(_flipper);
+        _patrol.Initialize(_flipper, _animator);
         _vision.Initialize(_flipper);
-        _chaser.Initialize(player, _flipper);
+        _chaser.Initialize(player, _flipper, _animator);
         _animator.Initialize();
+        _attacker.Initialize(_animator);
+        _health.Initialize();
+
+        _health.Damaged += _animator.PlayTakeDamage;
+        _health.Died += _animator.PlayDie;
 
         _context = new EnemyContext()
         {

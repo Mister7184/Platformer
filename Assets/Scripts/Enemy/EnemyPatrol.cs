@@ -13,10 +13,12 @@ public class EnemyPatrol : MonoBehaviour
     private Flipper _flipper;
     private float _speed;
     private int _direction;
+    private CharacterAnimator _animator;
 
-    public void Initialize(Flipper flipper)
+    public void Initialize(Flipper flipper, CharacterAnimator animator)
     {
         _flipper = flipper;
+        _animator = animator;
 
         _speed = _baseSpeed;
     }
@@ -36,6 +38,8 @@ public class EnemyPatrol : MonoBehaviour
 
     private void Patrol()
     {
+        _animator.SetSpeed(_speed);
+
         if (_wayPoints.Count == 0)
             return;
 

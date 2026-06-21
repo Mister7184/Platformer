@@ -11,17 +11,21 @@ public class EnemyChaser : MonoBehaviour
     private Transform _player;
     private Flipper _flipper;
     private int _direction;
+    private CharacterAnimator _animator;
 
     public int Direction => _direction;
 
-    public void Initialize(Transform player, Flipper flipper)
+    public void Initialize(Transform player, Flipper flipper, CharacterAnimator animator)
     {
         _player = player;
         _flipper = flipper;
+        _animator = animator;
     }
 
     public void UpdateLogic()
     {
+        _animator.SetSpeed(_speed);
+
         Transform left = _waypoints[0];
         Transform right = _waypoints[_waypoints.Count - 1];
 

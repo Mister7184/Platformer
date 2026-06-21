@@ -34,7 +34,7 @@ public class ChaseState : IEnemyState
         if (_context.Vision.CanSeePlayer() == false || _context.Vision.CanHearPlayer() == false)
             _stateMachine.ChangeState(_patrolState);
 
-        if (_context.Attacker.CanAttack())
+        if (_context.Attacker.HasTarget())
             _stateMachine.ChangeState(_attackState);
     }
 
