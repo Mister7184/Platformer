@@ -21,6 +21,11 @@ public class CharacterAnimator : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
+    public bool IsPlaying(string stateName) 
+    {
+        return _animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+    }
+
     public void SetSpeed(float moveSpeed)
     {
         _animator.SetFloat(Speed, moveSpeed);
@@ -28,6 +33,7 @@ public class CharacterAnimator : MonoBehaviour
 
     public void PlayTakeDamage() 
     {
+        Debug.Log("PlayTakeDamage " + gameObject.name);
         _animator.SetTrigger(Hit);
     }
 
@@ -36,8 +42,9 @@ public class CharacterAnimator : MonoBehaviour
         _animator.SetTrigger(Die);
     }
 
-    public void PlayAttack() 
+    public void PlayAttack()
     {
+        Debug.Log("Attack " + gameObject.name);
         _animator.SetTrigger(Attack);
     }
 }

@@ -1,25 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class EnemyStateMachine
 {
-    private IEnemyState _current;
+    public IEnemyState Current { get; private set; }
+
+    public IEnemyState LastState { get; private set; }
+
+    private bool _locked;
 
     public void ChangeState(IEnemyState next) 
     {
-        if (_current == next)
+        if (_locked) 
             return;
 
-        _current?.Exit();
+        if (Current == next)
+            return;
 
-        _current = next;
+        Current?.Exit();
 
-        _current.Enter();
+        LastState = Current;
+        Current = next;
+        
+        Current.Enter();
     }
 
     public void Update()
     {
-        _current?.Update();
+        Current?.Update();
     }
+
+    public void Lock() => _locked = true;
 }

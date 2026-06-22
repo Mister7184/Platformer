@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyContext
@@ -11,4 +9,6 @@ public class EnemyContext
     public EnemyAttacker Attacker;
     public EnemyChaser Chaser;
     public CharacterAnimator Animator;
+    public Health Health;
+    public GameObject Root;
 }

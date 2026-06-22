@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackState : IEnemyState
@@ -8,6 +6,7 @@ public class AttackState : IEnemyState
     private EnemyStateMachine _stateMachine;
 
     private ChaseState _chaseState;
+
     private float _timer;
     private float _attackCooldown = 1f;
 
@@ -24,7 +23,7 @@ public class AttackState : IEnemyState
 
     public void Enter()
     {
-        _timer = 0;
+        _timer = 0f;
     }
 
     public void Update()

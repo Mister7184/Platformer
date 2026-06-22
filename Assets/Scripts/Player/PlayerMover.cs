@@ -11,14 +11,14 @@ public class PlayerMover : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private PlayerInput _playerInput;
     private Flipper _flipper;
-    private CharacterAnimator _animator;
 
-    public void Initialize(Rigidbody2D rigidbody, PlayerInput playerInput, Flipper flipper, CharacterAnimator animator)
+    public Action<float> SpeedChanged;
+
+    public void Initialize(Rigidbody2D rigidbody, PlayerInput playerInput, Flipper flipper)
     {
         _rigidbody = rigidbody;
         _playerInput = playerInput;
         _flipper = flipper;
-        _animator = animator;
     }
 
     public void FixedUpdateLogic()
@@ -35,7 +35,7 @@ public class PlayerMover : MonoBehaviour
 
         _rigidbody.velocity = new Vector2(currentVelocityX, _rigidbody.velocity.y);
 
-        _animator.SetSpeed(MathF.Abs(currentVelocityX));
+        SpeedChanged?.Invoke(MathF.Abs(currentVelocityX));
 
         _flipper.Flip(_directionX);
     }

@@ -17,11 +17,15 @@ public class Player : MonoBehaviour
     private PlayerCollector _collector;
     private PlayerWallet _wallet;
 
+    public bool IsDead { get; private set; }
+
     private void OnDisable()
     {
+        _mover.SpeedChanged -= _animator.SetSpeed;
+        _input.AttackPressed -= _animator.PlayAttack;
         _input.AttackPressed -= _attacker.Attack;
         _health.Damaged -= _animator.PlayTakeDamage;
-        _health.Died -= _animator.PlayDie;
+        _health.Died -= Die;
     }
 
     public void Initialize()
@@ -37,16 +41,17 @@ public class Player : MonoBehaviour
         _wallet = GetComponent<PlayerWallet>();
         _animator = GetComponentInChildren<CharacterAnimator>();
 
-        _mover.Initialize(_rigidbody, _input, _flipper, _animator);
+        _mover.Initialize(_rigidbody, _input, _flipper);
         _jumper.Initialze(_rigidbody, _input);
         _health.Initialize();
         _animator.Initialize();
-        _attacker.Initialize(_animator);
         _collector.Initialize(_wallet, _health);
-        
+
+        _mover.SpeedChanged += _animator.SetSpeed;
+        _input.AttackPressed += _animator.PlayAttack;
         _input.AttackPressed += _attacker.Attack;
         _health.Damaged += _animator.PlayTakeDamage;
-        _health.Died += _animator.PlayDie;
+        _health.Died += Die;
     }
 
     public void UseUpdateLogic() 
@@ -58,5 +63,12 @@ public class Player : MonoBehaviour
     public void UseFixedUpdateLogic() 
     {
         _mover.FixedUpdateLogic();
+    }
+
+    private void Die() 
+    {
+        IsDead = true;
+
+        _animator.PlayDie();
     }
 }

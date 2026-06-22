@@ -13,12 +13,18 @@ public class MainController : MonoBehaviour
 
     private void Update()
     {
+        if (_player.IsDead)
+            return;
+
         _player.UseUpdateLogic();
         _gamePlayController.UseUpdateLogic();
     }
 
     private void FixedUpdate()
     {
+        if (_player.IsDead)
+            return;
+
         _player.UseFixedUpdateLogic();
     }
 }

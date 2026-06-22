@@ -13,12 +13,13 @@ public class Enemy : MonoBehaviour
     private CharacterAnimator _animator;
     private Health _health;
 
-
     private EnemyStateMachine _stateMachine;
 
     private PatrolState _patrolState;
     private ChaseState _chaseState;
     private AttackState _attackState;
+    private HitState _hitState;
+    private DieState _dieState;
 
     private EnemyContext _context;
 
@@ -45,8 +46,9 @@ public class Enemy : MonoBehaviour
         _attacker.Initialize(_animator);
         _health.Initialize();
 
-        _health.Damaged += _animator.PlayTakeDamage;
-        _health.Died += _animator.PlayDie;
+        _health.Damaged += OnHit;
+        Debug.Log("Подписал анимацию урона " + gameObject.name);
+        _health.Died += OnDie;
 
         _context = new EnemyContext()
         {
@@ -55,7 +57,10 @@ public class Enemy : MonoBehaviour
             Patrol = _patrol,
             Attacker = _attacker,
             Chaser = _chaser,
-            Flipper = _flipper
+            Flipper = _flipper,
+            Animator = _animator,
+            Health = _health,
+            Root = gameObject
         };
 
         _stateMachine = new EnemyStateMachine();
@@ -63,6 +68,8 @@ public class Enemy : MonoBehaviour
         _patrolState = new PatrolState(_context, _stateMachine);
         _chaseState = new ChaseState(_context, _stateMachine);
         _attackState = new AttackState(_context, _stateMachine);
+        _hitState = new HitState(_context, _stateMachine);
+        _dieState = new DieState(_context, _stateMachine);
 
         _patrolState.Initialize(_chaseState);
         _chaseState.Initialize(_patrolState, _attackState);
@@ -74,5 +81,16 @@ public class Enemy : MonoBehaviour
     public void UseUpdateLogic()
     {
         _stateMachine.Update();
+    }
+
+    private void OnHit() 
+    {
+        _hitState.SetReturnState(_stateMachine.LastState);
+        _stateMachine.ChangeState(_hitState);
+    }
+
+    private void OnDie() 
+    {
+        _stateMachine.ChangeState(_dieState);
     }
 }
