@@ -16,16 +16,22 @@ public class Player : MonoBehaviour
     private PlayerAttacker _attacker;
     private PlayerCollector _collector;
     private PlayerWallet _wallet;
+    private GroundChecker _groundChecker;
 
-    public bool IsDead { get; private set; }
+    private PlayerStateMachine _stateMachine;
+    private PlayerContext _context;
+
+    private PlayerIdleState _idleState;
+    private PlayerMoveState _moveState;
+    private PlayerJumpState _jumpState;
+    private PlayerAttackState _attackState;
+    private PlayerHitState _hitState;
+    private PlayerDieState _dieState;
 
     private void OnDisable()
     {
-        _mover.SpeedChanged -= _animator.SetSpeed;
-        _input.AttackPressed -= _animator.PlayAttack;
-        _input.AttackPressed -= _attacker.Attack;
         _health.Damaged -= _animator.PlayTakeDamage;
-        _health.Died -= Die;
+        _health.Died -= OnDie;
     }
 
     public void Initialize()
@@ -40,6 +46,7 @@ public class Player : MonoBehaviour
         _collector = GetComponent<PlayerCollector>();
         _wallet = GetComponent<PlayerWallet>();
         _animator = GetComponentInChildren<CharacterAnimator>();
+        _groundChecker = GetComponentInChildren<GroundChecker>();
 
         _mover.Initialize(_rigidbody, _input, _flipper);
         _jumper.Initialze(_rigidbody, _input);
@@ -48,27 +55,59 @@ public class Player : MonoBehaviour
         _collector.Initialize(_wallet, _health);
 
         _mover.SpeedChanged += _animator.SetSpeed;
-        _input.AttackPressed += _animator.PlayAttack;
-        _input.AttackPressed += _attacker.Attack;
-        _health.Damaged += _animator.PlayTakeDamage;
-        _health.Died += Die;
+        _health.Damaged += OnHit;
+        _health.Died += OnDie;
+
+        _context = new PlayerContext()
+        {
+            Input = _input,
+            Mover = _mover,
+            Jumper = _jumper,
+            Attacker = _attacker,
+            Animator = _animator,
+            Health = _health,
+            GroundChecker = _groundChecker,
+        };
+
+        _stateMachine = new PlayerStateMachine();
+
+        _idleState = new PlayerIdleState(_context, _stateMachine);
+        _moveState = new PlayerMoveState(_context, _stateMachine);
+        _jumpState = new PlayerJumpState(_context, _stateMachine);
+        _attackState = new PlayerAttackState(_context, _stateMachine);
+        _hitState = new PlayerHitState(_context, _stateMachine);
+        _dieState = new PlayerDieState(_context);
+
+        _idleState.Initialize(_moveState, _jumpState, _attackState);
+        _moveState.Initialize(_idleState, _jumpState, _attackState);
+        _jumpState.Initialize(_idleState, _moveState);
+        _attackState.Initialize(_moveState, _idleState, _jumpState);
+        _hitState.Initialize(_moveState, _idleState, _jumpState);
+
+        _stateMachine.ChangeState(_idleState);
     }
 
     public void UseUpdateLogic() 
     {
         _input.UpdateLogic();
-        _jumper.UpdateLogic();
+        _stateMachine.Update();
     }
 
     public void UseFixedUpdateLogic() 
     {
-        _mover.FixedUpdateLogic();
+        _stateMachine.FixedUpdate();
     }
 
-    private void Die() 
+    private void OnHit() 
     {
-        IsDead = true;
+        if(_stateMachine.Current == _dieState)
+            return;
 
-        _animator.PlayDie();
+        _stateMachine.ChangeState(_hitState);
+    }
+
+    private void OnDie() 
+    {
+        _stateMachine.ChangeState(_dieState);
     }
 }

@@ -1,22 +1,22 @@
 using UnityEngine;
 
-public class AttackState : IEnemyState
+public class EnemyAttackState : IEnemyState
 {
     private EnemyContext _context;
     private EnemyStateMachine _stateMachine;
 
-    private ChaseState _chaseState;
+    private EnemyChaseState _chaseState;
 
     private float _timer;
     private float _attackCooldown = 1f;
 
-    public AttackState(EnemyContext context, EnemyStateMachine stateMachine)
+    public EnemyAttackState(EnemyContext context, EnemyStateMachine stateMachine)
     {
         _context = context;
         _stateMachine = stateMachine;
     }
 
-    public void Initialize(ChaseState chaseState)
+    public void Initialize(EnemyChaseState chaseState)
     {
         _chaseState = chaseState;
     }

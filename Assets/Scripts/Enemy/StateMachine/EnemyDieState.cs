@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DieState : IEnemyState
+public class EnemyDieState : IEnemyState
 {
     private EnemyContext _context;
     private EnemyStateMachine _stateMachine;
@@ -8,7 +8,7 @@ public class DieState : IEnemyState
     private float _dieDuration = 1f;
     private float _timer;
 
-    public DieState(EnemyContext context, EnemyStateMachine stateMachine) 
+    public EnemyDieState(EnemyContext context, EnemyStateMachine stateMachine) 
     {
         _context = context;
         _stateMachine = stateMachine;

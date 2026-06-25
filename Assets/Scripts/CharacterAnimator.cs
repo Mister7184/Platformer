@@ -21,11 +21,6 @@ public class CharacterAnimator : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    public bool IsPlaying(string stateName) 
-    {
-        return _animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
-    }
-
     public void SetSpeed(float moveSpeed)
     {
         _animator.SetFloat(Speed, moveSpeed);

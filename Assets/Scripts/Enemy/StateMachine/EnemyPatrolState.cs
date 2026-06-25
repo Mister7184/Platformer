@@ -1,17 +1,17 @@
-public class PatrolState : IEnemyState
+public class EnemyPatrolState : IEnemyState
 {
     private EnemyContext _context;
     private EnemyStateMachine _stateMachine;
 
-    private ChaseState _chaseState;
+    private EnemyChaseState _chaseState;
 
-    public PatrolState(EnemyContext context, EnemyStateMachine stateMachine) 
+    public EnemyPatrolState(EnemyContext context, EnemyStateMachine stateMachine) 
     {
         _context = context;
         _stateMachine = stateMachine;
     }
 
-    public void Initialize(ChaseState chaseState) 
+    public void Initialize(EnemyChaseState chaseState) 
     {
         _chaseState = chaseState;
     }

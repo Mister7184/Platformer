@@ -14,13 +14,7 @@ public class PlayerJumper : MonoBehaviour
         _playerInput = playerInput;
     }
 
-    public void UpdateLogic()
-    {
-        if (_playerInput.IsJumpPressed && _groundChecker.IsGrounded())
-            Jump();
-    }
-
-    private void Jump() 
+    public void Jump() 
     {
         _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
     }

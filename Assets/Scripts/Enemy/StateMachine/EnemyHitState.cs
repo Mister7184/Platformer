@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HitState : IEnemyState
+public class EnemyHitState : IEnemyState
 {
     private EnemyContext _context;
     private EnemyStateMachine _stateMachine;
@@ -10,7 +10,7 @@ public class HitState : IEnemyState
     private float _hitDuration = 0.4f;
     private float _timer;
 
-    public HitState(EnemyContext context, EnemyStateMachine stateMachine)
+    public EnemyHitState(EnemyContext context, EnemyStateMachine stateMachine)
     {
         _context = context;
         _stateMachine = stateMachine;

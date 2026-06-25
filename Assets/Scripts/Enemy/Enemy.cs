@@ -15,11 +15,11 @@ public class Enemy : MonoBehaviour
 
     private EnemyStateMachine _stateMachine;
 
-    private PatrolState _patrolState;
-    private ChaseState _chaseState;
-    private AttackState _attackState;
-    private HitState _hitState;
-    private DieState _dieState;
+    private EnemyPatrolState _patrolState;
+    private EnemyChaseState _chaseState;
+    private EnemyAttackState _attackState;
+    private EnemyHitState _hitState;
+    private EnemyDieState _dieState;
 
     private EnemyContext _context;
 
@@ -65,11 +65,11 @@ public class Enemy : MonoBehaviour
 
         _stateMachine = new EnemyStateMachine();
 
-        _patrolState = new PatrolState(_context, _stateMachine);
-        _chaseState = new ChaseState(_context, _stateMachine);
-        _attackState = new AttackState(_context, _stateMachine);
-        _hitState = new HitState(_context, _stateMachine);
-        _dieState = new DieState(_context, _stateMachine);
+        _patrolState = new EnemyPatrolState(_context, _stateMachine);
+        _chaseState = new EnemyChaseState(_context, _stateMachine);
+        _attackState = new EnemyAttackState(_context, _stateMachine);
+        _hitState = new EnemyHitState(_context, _stateMachine);
+        _dieState = new EnemyDieState(_context, _stateMachine);
 
         _patrolState.Initialize(_chaseState);
         _chaseState.Initialize(_patrolState, _attackState);

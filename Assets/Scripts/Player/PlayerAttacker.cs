@@ -2,17 +2,21 @@ using UnityEngine;
 
 public class PlayerAttacker : MonoBehaviour
 {
+    private const int MaxPotentialTargets = 10;
+    
     [SerializeField] private float _radius = 1.5f;
     [SerializeField] private int _damage = 5;
     [SerializeField] private LayerMask _enemyLayer;
 
-    public void Attack() 
-    {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, _radius, _enemyLayer);
+    private readonly Collider2D[] _hitBuffer = new Collider2D[MaxPotentialTargets];
 
-        foreach (Collider2D enemy in enemies) 
+    public void Attack()
+    {
+        int count = Physics2D.OverlapCircleNonAlloc(transform.position, _radius, _hitBuffer, _enemyLayer);
+
+        for (int i = 0; i < count; i++)
         {
-            if (enemy.TryGetComponent(out IDamageable damageable))
+            if (_hitBuffer[i].TryGetComponent(out IDamageable damageable))
                 damageable.TakeDamage(_damage);
         }
     }

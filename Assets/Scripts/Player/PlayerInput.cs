@@ -11,15 +11,10 @@ public class PlayerInput : MonoBehaviour
     public bool IsJumpPressed { get; private set; }
     public bool IsAttackPressed { get; private set; }
 
-    public Action AttackPressed;
-
     public void UpdateLogic()
     {
         DirectionX = Input.GetAxisRaw(HorizontalAxis);
         IsJumpPressed = Input.GetKeyDown(JumpKey);
         IsAttackPressed = Input.GetKeyDown(AttackKey);
-        
-        if(IsAttackPressed)
-            AttackPressed?.Invoke();
     }
 }
