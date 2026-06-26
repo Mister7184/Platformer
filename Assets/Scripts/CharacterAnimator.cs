@@ -28,7 +28,6 @@ public class CharacterAnimator : MonoBehaviour
 
     public void PlayTakeDamage() 
     {
-        Debug.Log("PlayTakeDamage " + gameObject.name);
         _animator.SetTrigger(Hit);
     }
 
@@ -39,7 +38,6 @@ public class CharacterAnimator : MonoBehaviour
 
     public void PlayAttack()
     {
-        Debug.Log("Attack " + gameObject.name);
         _animator.SetTrigger(Attack);
     }
 }

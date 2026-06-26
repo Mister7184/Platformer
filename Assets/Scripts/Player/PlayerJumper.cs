@@ -6,12 +6,10 @@ public class PlayerJumper : MonoBehaviour
     [SerializeField] private GroundChecker _groundChecker;
 
     private Rigidbody2D _rigidbody;
-    private PlayerInput _playerInput;
 
-    public void Initialze(Rigidbody2D rigidbody, PlayerInput playerInput)
+    public void Initialze(Rigidbody2D rigidbody)
     {
         _rigidbody = rigidbody;
-        _playerInput = playerInput;
     }
 
     public void Jump() 

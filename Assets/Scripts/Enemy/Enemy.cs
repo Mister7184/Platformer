@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Flipper), typeof(EnemyPatrol), typeof(EnemyVision))]
 [RequireComponent(typeof(EnemyChaser), typeof(EnemyAttacker), typeof(Health))]
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IUpdatable
 {
     private EnemyPatrol _patrol;
     private EnemyVision _vision;
@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour
         _health.Initialize();
 
         _health.Damaged += OnHit;
-        Debug.Log("Подписал анимацию урона " + gameObject.name);
+        
         _health.Died += OnDie;
 
         _context = new EnemyContext()
@@ -78,7 +78,7 @@ public class Enemy : MonoBehaviour
         _stateMachine.ChangeState(_patrolState);
     }
 
-    public void UseUpdateLogic()
+    public void UpdateLogic()
     {
         _stateMachine.Update();
     }

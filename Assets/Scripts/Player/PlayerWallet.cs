@@ -7,6 +7,5 @@ public class PlayerWallet : MonoBehaviour
     public void AddCoin() 
     {
         _coins++;
-        Debug.Log(_coins);
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerIdleState : IPlayerState
@@ -50,7 +48,7 @@ public class PlayerIdleState : IPlayerState
 
     public void FixedUpdate() 
     {
-        _context.Mover.FixedUpdateLogic();
+        _context.Mover.FixedUpdateLogic(_context.Input.DirectionX);
     }
 
     public void Exit() 

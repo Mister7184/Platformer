@@ -30,11 +30,4 @@ public class EnemyAttacker : MonoBehaviour
         if (player.TryGetComponent(out IDamageable damageable))
             damageable.TakeDamage(_damage);
     }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-
-        Gizmos.DrawSphere(transform.position, _radius);
-    }
 }

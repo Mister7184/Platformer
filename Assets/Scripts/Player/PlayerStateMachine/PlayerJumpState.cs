@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerJumpState : IPlayerState
@@ -40,7 +38,7 @@ public class PlayerJumpState : IPlayerState
 
     public void FixedUpdate()
     {
-        _context.Mover.FixedUpdateLogic();
+        _context.Mover.FixedUpdateLogic(_context.Input.DirectionX);
     }
 
     public void Exit()

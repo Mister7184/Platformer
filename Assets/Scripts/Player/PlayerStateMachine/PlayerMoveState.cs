@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMoveState : IPlayerState
@@ -44,14 +42,13 @@ public class PlayerMoveState : IPlayerState
 
         if (Mathf.Abs(_context.Input.DirectionX) < 0.1f)
         {
-            Debug.Log(_context.Input.DirectionX);
             _stateMachine.ChangeState(_idleState);
         }
     }
 
     public void FixedUpdate()
     {
-        _context.Mover.FixedUpdateLogic();
+        _context.Mover.FixedUpdateLogic(_context.Input.DirectionX);
     }
 
     public void Exit()

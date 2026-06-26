@@ -21,9 +21,9 @@ public class PlayerMover : MonoBehaviour
         _flipper = flipper;
     }
 
-    public void FixedUpdateLogic()
+    public void FixedUpdateLogic(float directionX)
     {
-        _directionX = _playerInput.DirectionX;
+        _directionX = directionX;
 
         float targetSpeed = _directionX * _maxSpeed;
         float speedDifferent = targetSpeed - _rigidbody.velocity.x;

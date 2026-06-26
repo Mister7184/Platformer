@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody2D), typeof(PlayerMover),  typeof(PlayerJumper))]
 [RequireComponent(typeof(Flipper), typeof(Health), typeof(PlayerAttacker))]
 [RequireComponent(typeof(PlayerCollector), typeof(PlayerWallet))]
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
 {
     private Rigidbody2D _rigidbody;
     private PlayerMover _mover;
@@ -28,6 +29,8 @@ public class Player : MonoBehaviour
     private PlayerHitState _hitState;
     private PlayerDieState _dieState;
 
+    public Action Died;
+
     private void OnDisable()
     {
         _health.Damaged -= _animator.PlayTakeDamage;
@@ -49,7 +52,7 @@ public class Player : MonoBehaviour
         _groundChecker = GetComponentInChildren<GroundChecker>();
 
         _mover.Initialize(_rigidbody, _input, _flipper);
-        _jumper.Initialze(_rigidbody, _input);
+        _jumper.Initialze(_rigidbody);
         _health.Initialize();
         _animator.Initialize();
         _collector.Initialize(_wallet, _health);
@@ -87,13 +90,13 @@ public class Player : MonoBehaviour
         _stateMachine.ChangeState(_idleState);
     }
 
-    public void UseUpdateLogic() 
+    public void UpdateLogic() 
     {
         _input.UpdateLogic();
         _stateMachine.Update();
     }
 
-    public void UseFixedUpdateLogic() 
+    public void FixedUpdateLogic() 
     {
         _stateMachine.FixedUpdate();
     }
@@ -108,6 +111,7 @@ public class Player : MonoBehaviour
 
     private void OnDie() 
     {
+        Died?.Invoke();
         _stateMachine.ChangeState(_dieState);
     }
 }

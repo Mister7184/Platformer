@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class PlayerAttackState : IPlayerState
@@ -58,7 +55,7 @@ public class PlayerAttackState : IPlayerState
 
     public void FixedUpdate()
     {
-
+        _context.Mover.FixedUpdateLogic(_context.Input.DirectionX);
     }
 
     public void Exit()

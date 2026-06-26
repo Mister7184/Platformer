@@ -20,7 +20,7 @@ public class Health : MonoBehaviour, IDamageable
     public void TakeDamage(int damage) 
     {
         _currentHealth -= damage;
-        Debug.Log($"{name} получил урон");
+
         if (_currentHealth <= 0)
         {
             _currentHealth = 0;
@@ -28,7 +28,6 @@ public class Health : MonoBehaviour, IDamageable
         }
         else 
         {
-            Debug.Log($"{name} вызвал Damaged");
             Damaged?.Invoke();
         }
     }
