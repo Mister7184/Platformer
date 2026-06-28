@@ -14,6 +14,9 @@ public class PlayerJumper : MonoBehaviour
 
     public void Jump() 
     {
+        if (_groundChecker.IsGrounded == false)
+            return;
+
         _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
     }
 }

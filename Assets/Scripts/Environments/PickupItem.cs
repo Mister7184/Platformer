@@ -1,11 +1,12 @@
+using System;
 using UnityEngine;
 
 public abstract class PickupItem : MonoBehaviour
 {
-    public abstract void Collect(PlayerCollector collector);
+    public Action<PickupItem> Picked;
 
-    protected void DestroySelf() 
+    public void Collect() 
     {
-        Destroy(gameObject);
+        Picked?.Invoke(this);
     }
 }

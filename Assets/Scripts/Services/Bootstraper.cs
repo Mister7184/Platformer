@@ -10,41 +10,41 @@ public class Bootstraper : MonoBehaviour
     private List<IUpdatable> _updatables = new List<IUpdatable>(); 
     private List<IFixedUpdatable> _fixedUpdatables = new List<IFixedUpdatable>();
 
-    private GameContext _context;
-    private GameStateMachine _stateMachine;
-    private BootstrapState _bootstrapState;
-    private GameState _gameState;
-    private GameOverState _gameOverState;
-
     private void Awake()
     {
-        _context = new GameContext()
+        _player.Initialize();
+        Register(_player);
+
+        foreach (Enemy enemy in _enemies)
         {
-            Player = _player,
-            Enemies = _enemies,
-            Spawners = _spawners,
-            Updatables = _updatables,
-            FixedUpdatables = _fixedUpdatables
-        };
+            enemy.Initialize(_player.transform);
+            Register(enemy);
+        }
 
-        _stateMachine = new GameStateMachine();
-        _bootstrapState = new BootstrapState(_stateMachine, _context);
-        _gameState = new GameState(_context, _stateMachine);
-        _gameOverState = new GameOverState();
-
-        _bootstrapState.Initialize(_gameState);
-        _gameState.Initialize(_gameOverState);
-
-        _stateMachine.ChangeState(_bootstrapState);
+        foreach (ItemSpawner spawner in _spawners)
+        {
+            spawner.Spawn();
+        }
     }
 
     private void Update()
     {
-        _stateMachine?.Update();
+        foreach (IUpdatable updatable in _updatables)
+            updatable.UpdateLogic();
     }
 
     private void FixedUpdate()
     {
-        _stateMachine?.FixedUpdate();
+        foreach (IFixedUpdatable fixedUpdatable in _fixedUpdatables)
+            fixedUpdatable.FixedUpdateLogic();
+    }
+
+    private void Register(Object obj)
+    {
+        if (obj is IUpdatable updatable)
+            _updatables.Add(updatable);
+
+        if (obj is IFixedUpdatable fixedUpdatable)
+            _fixedUpdatables.Add(fixedUpdatable);
     }
 }

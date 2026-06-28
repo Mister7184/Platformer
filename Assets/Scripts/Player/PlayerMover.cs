@@ -3,25 +3,25 @@ using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
 {
+    private const float VelocityThreshold = 0.05f;
+
     [SerializeField] private float _maxSpeed = 8f;
     [SerializeField] private float _acceleration = 6f;
     [SerializeField] private float _deceleation = 8f;
 
     private float _directionX;
     private Rigidbody2D _rigidbody;
-    private PlayerInput _playerInput;
     private Flipper _flipper;
 
     public Action<float> SpeedChanged;
 
-    public void Initialize(Rigidbody2D rigidbody, PlayerInput playerInput, Flipper flipper)
+    public void Initialize(Rigidbody2D rigidbody, Flipper flipper)
     {
         _rigidbody = rigidbody;
-        _playerInput = playerInput;
         _flipper = flipper;
     }
 
-    public void FixedUpdateLogic(float directionX)
+    public void Move(float directionX)
     {
         _directionX = directionX;
 
@@ -44,7 +44,7 @@ public class PlayerMover : MonoBehaviour
     {
         float normalVelocityX = _rigidbody.velocity.x + movement;
 
-        if (Mathf.Abs(normalVelocityX) < 0.05f)
+        if (Mathf.Abs(normalVelocityX) < VelocityThreshold)
             normalVelocityX = 0;
 
         return normalVelocityX;

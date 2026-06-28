@@ -14,7 +14,11 @@ public class ItemSpawner : MonoBehaviour
         List<Transform> points = GetSpawnPoints();
 
         foreach (Transform point in points)
-            Instantiate(_prefab, point.position, Quaternion.identity);
+        {
+            PickupItem item = Instantiate(_prefab, point.position, Quaternion.identity);
+
+            item.Picked += OnItemPicked;
+        }
     }
 
     private List<Transform> GetSpawnPoints() 
@@ -39,5 +43,12 @@ public class ItemSpawner : MonoBehaviour
         }
 
         return result;
+    }
+
+    private void OnItemPicked(PickupItem item) 
+    {
+        item.Picked -= OnItemPicked;
+
+        Destroy(item.gameObject);
     }
 }

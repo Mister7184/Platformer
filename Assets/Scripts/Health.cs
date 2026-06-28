@@ -17,23 +17,29 @@ public class Health : MonoBehaviour, IDamageable
         _currentHealth = _maxHealth;
     }
 
-    public void TakeDamage(int damage) 
+    public void TakeDamage(int damage)
     {
-        _currentHealth -= damage;
+        if (damage < 0)
+            return;
 
-        if (_currentHealth <= 0)
+        _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, _maxHealth);
+
+        if (_currentHealth == 0)
         {
             _currentHealth = 0;
             Died?.Invoke();
         }
-        else 
+        else
         {
             Damaged?.Invoke();
         }
     }
 
-    public void AddHealth(int value) 
+    public void AddHealth(int value)
     {
-        _currentHealth = Mathf.Min(_currentHealth + value, _maxHealth);
+        if (value < 0)
+            return;
+
+        _currentHealth = Mathf.Clamp(_currentHealth + value, 0, _maxHealth);
     }
 }

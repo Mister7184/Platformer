@@ -12,15 +12,26 @@ public class PlayerCollector : MonoBehaviour
 
     public void Initialize(PlayerWallet wallet, Health health) 
     {
-        _wallet = GetComponent<PlayerWallet>();
-        _health = GetComponent<Health>();
+        _wallet = wallet;
+        _health = health;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.TryGetComponent<PickupItem>(out PickupItem pickup)) 
+        if (other.TryGetComponent(out PickupItem pickup) == false)
+            return;
+
+        switch (pickup) 
         {
-            pickup.Collect(this);
+            case Coin:
+                _wallet.AddCoin();
+                break;
+
+            case HealthPotion healthPotion:
+                _health.AddHealth(healthPotion.HealAmount);
+                break;
         }
+        
+        pickup.Collect();
     }
 }
