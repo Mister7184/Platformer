@@ -13,8 +13,6 @@ public class Enemy : MonoBehaviour, IUpdatable
     private CharacterAnimator _animator;
     private Health _health;
 
-    private bool _isDead;
-
     private void OnDisable()
     {
         _health.Damaged -= _animator.PlayTakeDamage;
@@ -46,7 +44,7 @@ public class Enemy : MonoBehaviour, IUpdatable
 
     public void UpdateLogic()
     {
-        if(_isDead)
+        if(_health.IsDead)
             return;
 
         if (_attacker.HasTarget())
@@ -66,7 +64,6 @@ public class Enemy : MonoBehaviour, IUpdatable
 
     private void OnDie() 
     {
-        _isDead = true;
         _animator.SetSpeed(0f);
         _animator.PlayDie();
     }

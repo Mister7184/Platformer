@@ -22,9 +22,12 @@ public class Health : MonoBehaviour, IDamageable
         if (damage < 0)
             return;
 
+        if (IsDead) 
+            return;
+
         _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, _maxHealth);
 
-        if (_currentHealth == 0)
+        if (IsDead)
         {
             _currentHealth = 0;
             Died?.Invoke();

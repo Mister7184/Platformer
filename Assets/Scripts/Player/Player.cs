@@ -19,13 +19,12 @@ public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
     private PlayerWallet _wallet;
     private GroundChecker _groundChecker;
 
-    public Action Died;
-
     private void OnDisable()
     {
         _mover.SpeedChanged -= _animator.SetSpeed;
         _input.AttackPressed -= _animator.PlayAttack;
         _health.Damaged -= _animator.PlayTakeDamage;
+        _health.Died -= OnDie;
     }
 
     public void Initialize()
@@ -53,10 +52,14 @@ public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
         _mover.SpeedChanged += _animator.SetSpeed;
         _input.AttackPressed += _animator.PlayAttack;
         _health.Damaged += _animator.PlayTakeDamage;
+        _health.Died += OnDie;
     }
 
     public void UpdateLogic()
     {
+        if (_health.IsDead)
+            return;
+
         _input.UpdateLogic();
 
         if(_input.IsAttackPressed)
@@ -68,6 +71,14 @@ public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
 
     public void FixedUpdateLogic()
     {
+        if (_health.IsDead)
+            return;
+
         _mover.Move(_input.DirectionX);
+    }
+
+    private void OnDie() 
+    {
+        _animator.PlayDie();
     }
 }
