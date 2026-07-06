@@ -18,6 +18,7 @@ public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
     private PlayerCollector _collector;
     private PlayerWallet _wallet;
     private GroundChecker _groundChecker;
+    private SmoothHealthBarView _healthBarView;
 
     private void OnDisable()
     {
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
         _wallet = GetComponent<PlayerWallet>();
         _animator = GetComponentInChildren<CharacterAnimator>();
         _groundChecker = GetComponentInChildren<GroundChecker>();
+        _healthBarView = GetComponentInChildren<SmoothHealthBarView>();
 
         _mover.Initialize(_rigidbody, _flipper);
         _jumper.Initialze(_rigidbody);
@@ -48,6 +50,7 @@ public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
         _collector.Initialize(_wallet, _health);
         _flipper.Initialize();
         _groundChecker.Initialize();
+        _healthBarView.Initialize(_health);
 
         _mover.SpeedChanged += _animator.SetSpeed;
         _input.AttackPressed += _animator.PlayAttack;

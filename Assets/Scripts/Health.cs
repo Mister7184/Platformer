@@ -3,18 +3,19 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable
 {
-    [SerializeField] private int _maxHealth = 10;
+    [SerializeField] private int _max = 10;
 
-    private int _currentHealth;
+    private int _current;
 
-    public Action Damaged;
+    public bool IsDead => _current <= 0;
+
     public Action Died;
-
-    public bool IsDead => _currentHealth <= 0;
+    public Action Damaged;
+    public Action<int, int> Changed;
 
     public void Initialize()
     {
-        _currentHealth = _maxHealth;
+        _current = _max;
     }
 
     public void TakeDamage(int damage)
@@ -22,20 +23,17 @@ public class Health : MonoBehaviour, IDamageable
         if (damage < 0)
             return;
 
-        if (IsDead) 
+        if (IsDead)
             return;
 
-        _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, _maxHealth);
+        _current = Mathf.Clamp(_current - damage, 0, _max);
+        
+        Refresh();
 
         if (IsDead)
-        {
-            _currentHealth = 0;
             Died?.Invoke();
-        }
         else
-        {
             Damaged?.Invoke();
-        }
     }
 
     public void AddHealth(int value)
@@ -43,6 +41,16 @@ public class Health : MonoBehaviour, IDamageable
         if (value < 0)
             return;
 
-        _currentHealth = Mathf.Clamp(_currentHealth + value, 0, _maxHealth);
+        if (IsDead)
+            return;
+
+        _current = Mathf.Clamp(_current + value, 0, _max);
+
+        Refresh();
+    }
+
+    public void Refresh()
+    {
+        Changed?.Invoke(_current, _max);
     }
 }

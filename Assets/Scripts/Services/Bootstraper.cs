@@ -8,7 +8,7 @@ public class Bootstraper : MonoBehaviour
     [SerializeField] private List<ItemSpawner> _spawners;
 
     private List<IUpdatable> _updatables = new List<IUpdatable>(); 
-    private List<IFixedUpdatable> _fixedUpdatables = new List<IFixedUpdatable>();
+    private List<IFixedUpdatable> _fixedUpdatables = new();
 
     private void Awake()
     {
