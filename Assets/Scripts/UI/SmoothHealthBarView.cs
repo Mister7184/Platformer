@@ -34,7 +34,7 @@ public class SmoothHealthBarView : MonoBehaviour
 
     private IEnumerator ChangeValue(float targetValue) 
     {
-        while (_slider.value != targetValue) 
+        while (Mathf.Approximately(_slider.value, targetValue) == false) 
         {
             _slider.value = Mathf.MoveTowards(
                 _slider.value, 
@@ -43,6 +43,8 @@ public class SmoothHealthBarView : MonoBehaviour
 
             yield return null;
         }
+
+        _slider.value = targetValue;
     }
 
     private float Normalize(int current, int max)
