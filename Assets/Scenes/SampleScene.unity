@@ -195,30 +195,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b403a0e94e05fdc45aa9b598f2d76d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &91723435 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5691559516045535186, guid: bd8f10d51c34bb94fb798196ebb0748c, type: 3}
-  m_PrefabInstance: {fileID: 2748311821206631772}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &152937857
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 91723435}
+    m_TransformParent: {fileID: 1984547649}
     m_Modifications:
     - target: {fileID: 3417218491254008571, guid: b3a1e82313f8aba4a8c61b80508d4a23, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.7692308
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3417218491254008571, guid: b3a1e82313f8aba4a8c61b80508d4a23, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.7692308
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3417218491254008571, guid: b3a1e82313f8aba4a8c61b80508d4a23, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.7692308
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3417218491254008571, guid: b3a1e82313f8aba4a8c61b80508d4a23, type: 3}
       propertyPath: m_LocalPosition.x
@@ -226,7 +221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3417218491254008571, guid: b3a1e82313f8aba4a8c61b80508d4a23, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.23846158
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3417218491254008571, guid: b3a1e82313f8aba4a8c61b80508d4a23, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1703,7 +1698,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1429197166}
+    m_TransformParent: {fileID: 6712048986428179031}
     m_Modifications:
     - target: {fileID: 3417218491254008571, guid: b3a1e82313f8aba4a8c61b80508d4a23, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1946,11 +1941,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b403a0e94e05fdc45aa9b598f2d76d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1429197166 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3809512806267771808, guid: 6cc500abc744e4a48838b2097a485ef6, type: 3}
-  m_PrefabInstance: {fileID: 5114825166074344149}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1445803918
 GameObject:
   m_ObjectHideFlags: 0
@@ -2818,7 +2808,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 6936945606993925481}
+    m_TransformParent: {fileID: 1424651987}
     m_Modifications:
     - target: {fileID: 3417218491254008571, guid: b3a1e82313f8aba4a8c61b80508d4a23, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3450,7 +3440,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2222362696655159974, guid: 59153d71e14682e4d8b0b4f1bec1cd0e, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 2801250990365220683, guid: 59153d71e14682e4d8b0b4f1bec1cd0e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1315463177}
     m_AddedComponents:
@@ -3605,7 +3595,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 5691559516045535186, guid: bd8f10d51c34bb94fb798196ebb0748c, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 3067246493578457524, guid: bd8f10d51c34bb94fb798196ebb0748c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1798414315}
     m_AddedComponents:
@@ -3815,7 +3805,7 @@ PrefabInstance:
     - {fileID: 4651743562720164597, guid: 6cc500abc744e4a48838b2097a485ef6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3809512806267771808, guid: 6cc500abc744e4a48838b2097a485ef6, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 5390596343760743686, guid: 6cc500abc744e4a48838b2097a485ef6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1467718088}
     m_AddedComponents:
@@ -4018,11 +4008,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b403a0e94e05fdc45aa9b598f2d76d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &6936945606993925481 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2222362696655159974, guid: 59153d71e14682e4d8b0b4f1bec1cd0e, type: 3}
-  m_PrefabInstance: {fileID: 289498178338772702}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8462337976082869727
 PrefabInstance:
   m_ObjectHideFlags: 0
