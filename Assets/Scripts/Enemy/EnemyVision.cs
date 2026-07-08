@@ -20,14 +20,44 @@ public class EnemyVision : MonoBehaviour
     {
         _flipper = flipper;
     }
-    public bool CanSeePlayer()
+
+    public bool TryGetPlayer(out Transform player) 
     {
-        return Physics2D.OverlapBox(transform.position + VisionOffset, _seeSize, 0, _playerLayer);
+        if(CanSeePlayer(out player))
+            return true;
+
+        if (CanHearPlayer(out player))
+            return true;
+
+        return false;
     }
 
-    public bool CanHearPlayer() 
+    private bool CanSeePlayer(out Transform player)
     {
-        return Physics2D.OverlapBox(transform.position + HearOffset, _hearSize, 0, _playerLayer);
+        Collider2D collider = Physics2D.OverlapBox(transform.position + VisionOffset, _seeSize, 0, _playerLayer);
+
+        if (collider == null) 
+        {
+            player = null;
+            return false;
+        }
+
+        player = collider.transform;
+        return true;
+    }
+
+    private bool CanHearPlayer(out Transform player) 
+    {
+        Collider2D collider = Physics2D.OverlapBox(transform.position + HearOffset, _hearSize, 0, _playerLayer);
+
+        if (collider == null)
+        {
+            player = null;
+            return false;
+        }
+
+        player = collider.transform;
+        return true;
     }
 
     private Vector3 VisionOffset => new Vector3(_visionOffset.x * _flipper.Direction, _visionOffset.y, 0);

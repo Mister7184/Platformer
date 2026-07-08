@@ -38,6 +38,7 @@ public class PlayerMover : MonoBehaviour
         SpeedChanged?.Invoke(MathF.Abs(currentVelocityX));
 
         _flipper.Flip(_directionX);
+        Debug.Log(_directionX);
     }
 
     private float NormalizedVelocityX(float movement) 

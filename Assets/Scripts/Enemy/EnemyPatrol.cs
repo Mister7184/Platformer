@@ -22,11 +22,6 @@ public class EnemyPatrol : MonoBehaviour
         _speed = _baseSpeed;
     }
 
-    public void UpdateLogic()
-    {
-        Patrol();
-    }
-
     public void SetDirection(float direction)
     {
         if (direction > 0)
@@ -35,7 +30,7 @@ public class EnemyPatrol : MonoBehaviour
             _pointIndex = 0;
     }
 
-    private void Patrol()
+    public void Patrol()
     {
         _animator.SetSpeed(_speed);
 

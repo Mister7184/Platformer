@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Flipper), typeof(EnemyPatrol), typeof(EnemyVision))]
+[RequireComponent(typeof(EnemyPatrol), typeof(EnemyVision))]
 [RequireComponent(typeof(EnemyChaser), typeof(EnemyAttacker), typeof(Health))]
 
 public class Enemy : MonoBehaviour, IUpdatable
@@ -22,12 +22,12 @@ public class Enemy : MonoBehaviour, IUpdatable
 
     public void Initialize(Transform player)
     {
-        _flipper = GetComponent<Flipper>();
         _patrol = GetComponent<EnemyPatrol>();
         _vision = GetComponent<EnemyVision>();
         _attacker = GetComponent<EnemyAttacker>();
         _chaser = GetComponent<EnemyChaser>();
         _health = GetComponent<Health>();
+        _flipper = GetComponentInChildren<Flipper>();
         _animator = GetComponentInChildren<CharacterAnimator>();
         _healthBarView = GetComponentInChildren<SmoothHealthBarView>();
 
@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour, IUpdatable
 
         _patrol.Initialize(_flipper, _animator);
         _vision.Initialize(_flipper);
-        _chaser.Initialize(player, _flipper, _animator);
+        _chaser.Initialize(_flipper, _animator);
         _attacker.Initialize(_animator);
 
         _health.Damaged += _animator.PlayTakeDamage;
@@ -56,13 +56,13 @@ public class Enemy : MonoBehaviour, IUpdatable
             return;
         }
 
-        if (_vision.CanSeePlayer() || _vision.CanHearPlayer()) 
+        if (_vision.TryGetPlayer(out Transform player))
         {
-            _chaser.UpdateLogic();
+            _chaser.MoveTo(player);
             return;
         }
 
-        _patrol.UpdateLogic();
+        _patrol.Patrol();
     }
 
     private void OnDie() 

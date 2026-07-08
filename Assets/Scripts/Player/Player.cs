@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerMover), typeof(PlayerJumper))]
-[RequireComponent(typeof(Flipper), typeof(Health), typeof(PlayerAttacker))]
+[RequireComponent(typeof(Health), typeof(PlayerAttacker))]
 [RequireComponent(typeof(PlayerCollector), typeof(PlayerWallet))]
 
 public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
@@ -32,13 +32,13 @@ public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
     {
         _input = GetComponent<PlayerInput>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        _flipper = GetComponent<Flipper>();
         _mover = GetComponent<PlayerMover>();
         _jumper = GetComponent<PlayerJumper>();
         _health = GetComponent<Health>();
         _attacker = GetComponent<PlayerAttacker>();
         _collector = GetComponent<PlayerCollector>();
         _wallet = GetComponent<PlayerWallet>();
+        _flipper = GetComponentInChildren<Flipper>();
         _animator = GetComponentInChildren<CharacterAnimator>();
         _groundChecker = GetComponentInChildren<GroundChecker>();
         _healthBarView = GetComponentInChildren<SmoothHealthBarView>();
@@ -49,6 +49,7 @@ public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
         _animator.Initialize();
         _collector.Initialize(_wallet, _health);
         _flipper.Initialize();
+        Debug.Log(_flipper);
         _groundChecker.Initialize();
         _healthBarView.Initialize(_health);
 
