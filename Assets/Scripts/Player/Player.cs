@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(PlayerMover), typeof(PlayerJumper))]
-[RequireComponent(typeof(Health), typeof(PlayerAttacker))]
-[RequireComponent(typeof(PlayerCollector), typeof(PlayerWallet))]
+[RequireComponent(typeof(Health), typeof(PlayerAttacker), typeof(PlayerVision))]
+[RequireComponent(typeof(PlayerCollector), typeof(PlayerWallet), typeof(VampirismAbility))]
 
 public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
 {
@@ -15,10 +14,12 @@ public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
     private Flipper _flipper;
     private Health _health;
     private PlayerAttacker _attacker;
+    private PlayerVision _vision;
     private PlayerCollector _collector;
     private PlayerWallet _wallet;
     private GroundChecker _groundChecker;
     private SmoothHealthBarView _healthBarView;
+    private VampirismAbility _vampirismAbility;
 
     private void OnDisable()
     {
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
         _input.AttackPressed -= _animator.PlayAttack;
         _health.Damaged -= _animator.PlayTakeDamage;
         _health.Died -= OnDie;
+        _input.VampirismPressed -= _vampirismAbility.TryActivate;
     }
 
     public void Initialize()
@@ -38,6 +40,8 @@ public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
         _attacker = GetComponent<PlayerAttacker>();
         _collector = GetComponent<PlayerCollector>();
         _wallet = GetComponent<PlayerWallet>();
+        _vision = GetComponent<PlayerVision>();
+        _vampirismAbility = GetComponent<VampirismAbility>();
         _flipper = GetComponentInChildren<Flipper>();
         _animator = GetComponentInChildren<CharacterAnimator>();
         _groundChecker = GetComponentInChildren<GroundChecker>();
@@ -49,14 +53,15 @@ public class Player : MonoBehaviour, IUpdatable, IFixedUpdatable
         _animator.Initialize();
         _collector.Initialize(_wallet, _health);
         _flipper.Initialize();
-        Debug.Log(_flipper);
         _groundChecker.Initialize();
         _healthBarView.Initialize(_health);
+        _vampirismAbility.Initialize(_health, _vision);
 
         _mover.SpeedChanged += _animator.SetSpeed;
         _input.AttackPressed += _animator.PlayAttack;
         _health.Damaged += _animator.PlayTakeDamage;
         _health.Died += OnDie;
+        _input.VampirismPressed += _vampirismAbility.TryActivate;
     }
 
     public void UpdateLogic()

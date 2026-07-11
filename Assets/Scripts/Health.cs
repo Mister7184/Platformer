@@ -20,20 +20,28 @@ public class Health : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
-        if (damage < 0)
-            return;
+        Reduce(damage);
+    }
 
-        if (IsDead)
-            return;
+    public int Reduce(int damage) 
+    {
+        if (damage <= 0 || IsDead)
+            return 0;
+
+        int previousValue = _current;
 
         _current = Mathf.Clamp(_current - damage, 0, _max);
-        
+
+        int appliedDamage = previousValue - _current;
+
         Refresh();
 
         if (IsDead)
             Died?.Invoke();
         else
             Damaged?.Invoke();
+
+        return appliedDamage;
     }
 
     public void AddHealth(int value)
