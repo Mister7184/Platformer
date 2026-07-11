@@ -100,6 +100,4 @@ public class VampirismAbility : MonoBehaviour
             yield return null;
         }
     }
-
-
 }
